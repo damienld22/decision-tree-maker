@@ -1,0 +1,45 @@
+{
+  "name": "decision-tree-maker-lib",
+  "version": "0.0.1",
+  "description": "Decision tree maker lib",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "files": [
+    "/lib"
+  ],
+  "scripts": {
+    "prepack": "yarn build",
+    "build": "rollup -c",
+    "watch": "rollup -cw"
+  },
+  "keywords": [
+    "Decision",
+    "tree"
+  ],
+  "author": "Damien Le Dantec <damien-le-dantec@hotmail.fr>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "16.8 - 17 - 18",
+    "react-dom": "16.8 - 17 - 18"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "@types/uniqid": "^5.3.2",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.16",
+    "rollup": "^2.78.1",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.33.0",
+    "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "os-browserify": "^0.3.0",
+    "react-d3-tree": "^3.3.4",
+    "uniqid": "^5.4.0"
+  }
+}

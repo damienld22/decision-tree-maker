@@ -1,0 +1,5 @@
+{
+  "useClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent"
+}
