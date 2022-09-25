@@ -8,5 +8,5 @@ export interface DecisionTreeStepAttributes {
 }
 
 export interface DecisionTree extends DecisionTreeStep {
-  children: Array<DecisionTree>
+  children: Array<DecisionTree>;
 }

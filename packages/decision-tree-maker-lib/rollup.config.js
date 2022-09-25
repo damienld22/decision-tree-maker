@@ -31,7 +31,8 @@ export default {
   ],
   onwarn: function (warning, warn) {
     // Ignore d3-transition circular dependency warning
-    if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.importer.includes('/node_modules/d3')) return;
-    warn(warning)
-  }
+    if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.importer.includes('/node_modules/d3'))
+      return;
+    warn(warning);
+  },
 };
