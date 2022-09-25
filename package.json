@@ -3,18 +3,10 @@
   "private": true,
   "description": "Decision tree maker",
   "version": "0.0.1",
-  "scripts": {
-    "build": "lerna run build --scope decision-tree-maker-lib",
-    "watch": "lerna run watch --scope decision-tree-maker-lib",
-    "package": "lerna exec --scope decision-tree-maker-lib -- npm pack"
-  },
   "workspaces": [
     "examples/*",
     "packages/*"
   ],
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  },
   "keywords": [
     "Decision",
     "tree"

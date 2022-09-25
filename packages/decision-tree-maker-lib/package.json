@@ -20,8 +20,8 @@
   "author": "Damien Le Dantec <damien-le-dantec@hotmail.fr>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "16.8 - 17 - 18",
-    "react-dom": "16.8 - 17 - 18"
+    "react": "^16.8.0 || 17.x || 18.x",
+    "react-dom": "^16.8.0 || 17.x || 18.x"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",

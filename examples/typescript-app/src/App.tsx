@@ -1,9 +1,8 @@
 import { DecisionTree } from 'decision-tree-maker-lib';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <DecisionTree />
     </div>
   );
