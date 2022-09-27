@@ -1,12 +1,7 @@
-export interface DecisionTreeStep {
-  name: string;
-  attributes: DecisionTreeStepAttributes;
-}
+import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 
-export interface DecisionTreeStepAttributes {
-  title: string;
-}
+export type DecisionTreeStepAttributesKeys = 'title';
 
-export interface DecisionTree extends DecisionTreeStep {
-  children: Array<DecisionTree>;
+export interface DecisionTree extends RawNodeDatum {
+  attributes?: Record<DecisionTreeStepAttributesKeys, string | number | boolean>;
 }
