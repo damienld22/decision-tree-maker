@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import Tree from 'react-d3-tree';
-import { RawNodeDatum, RenderCustomNodeElementFn } from 'react-d3-tree/lib/types/common';
+import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import { useCenteredTree } from '../hooks/useCenteredTree';
 import useDecisionTree from '../hooks/useDecisionTree';
 import TreeNodeElement from './TreeNodeElement';
@@ -19,7 +19,7 @@ const DecisionTree: FC<DecisionTreeProps> = ({
 }) => {
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
-  const { tree, zoom } = useDecisionTree();
+  const { tree, zoom, addChild } = useDecisionTree();
   const [selectedNode, setSelectedNode] = useState<RawNodeDatum>();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const DecisionTree: FC<DecisionTreeProps> = ({
         zoom={zoom}
         data={tree as any} // eslint-disable-line @typescript-eslint/no-explicit-any
         translate={translate}
-        renderCustomNodeElement={TreeNodeElement as RenderCustomNodeElementFn}
+        renderCustomNodeElement={(props) => <TreeNodeElement {...props} onAddNode={addChild} />}
         nodeSize={{ x: nodeSize, y: nodeSize }}
         orientation='vertical'
         collapsible={false}

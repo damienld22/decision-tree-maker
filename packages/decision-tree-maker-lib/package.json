@@ -11,7 +11,8 @@
   "scripts": {
     "prepack": "yarn build",
     "build": "rollup -c",
-    "watch": "rollup -cw"
+    "watch": "rollup -cw",
+    "test": "jest"
   },
   "keywords": [
     "Decision",
@@ -26,6 +27,8 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.0.3",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "@types/uniqid": "^5.3.2",
@@ -35,11 +38,23 @@
     "rollup-plugin-node-polyfills": "^0.2.1",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.33.0",
+    "ts-jest": "^29.0.2",
     "typescript": "^4.8.2"
   },
   "dependencies": {
     "os-browserify": "^0.3.0",
     "react-d3-tree": "^3.3.4",
     "uniqid": "^5.4.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

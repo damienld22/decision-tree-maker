@@ -9,7 +9,7 @@ function App() {
       <div>
         <p>{`Selected node : ${selectedNode?.name || 'None'}`}</p>
       </div>
-      <DecisionTree onSelectedNodeChanged={setSelectedNode} />
+      <DecisionTree width={'90vw'} height={'90vh'} onSelectedNodeChanged={setSelectedNode} />
     </div>
   );
 }
