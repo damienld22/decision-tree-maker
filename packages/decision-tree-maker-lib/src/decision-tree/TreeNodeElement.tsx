@@ -2,17 +2,20 @@ import { FC } from 'react';
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import styles from './style.module.css';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { DecisionTree } from './types';
 
 export interface TreeNodeElementProps {
   onAddNode: (parentName: string) => void;
   nodeDatum: RawNodeDatum;
   onNodeClick: () => void;
+  onOpenEdition: (decisionTree: DecisionTree) => void;
 }
 
 const TreeNodeElement: FC<TreeNodeElementProps> = ({
   nodeDatum,
   onNodeClick,
   onAddNode = () => {},
+  onOpenEdition,
 }) => {
   const height = 120;
   const width = 200;
@@ -32,7 +35,13 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   );
 
   const EditButton = () => (
-    <p className={styles.editButton}>
+    <p
+      className={styles.editButton}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        onOpenEdition(nodeDatum as DecisionTree);
+      }}
+    >
       <FaPencilAlt />
     </p>
   );

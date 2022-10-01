@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import uniqid from 'uniqid';
-import { DecisionTree } from '../decision-tree/types';
+import { DecisionTree, DecisionTreeAttributes } from '../decision-tree/types';
 
 function getInitialTree() {
   return {
@@ -12,20 +12,18 @@ function getInitialTree() {
   };
 }
 
-function findNodeAndAddNewChild(tree: DecisionTree, parentName: string): DecisionTree {
-  const updatedTree = { ...tree };
-
-  if (parentName === updatedTree.name) {
-    updatedTree.children?.push({
-      name: uniqid(),
-      children: [],
-      attributes: { title: 'Child' },
-    });
+function findNodeAndApplyCallbackOnNode(
+  tree: DecisionTree,
+  parentName: string,
+  callback: (node: DecisionTree) => void,
+) {
+  if (parentName === tree.name) {
+    callback(tree);
   } else {
-    updatedTree.children?.forEach((subTree) => findNodeAndAddNewChild(subTree, parentName));
+    tree.children.forEach((subTree) => {
+      findNodeAndApplyCallbackOnNode(subTree, parentName, callback);
+    });
   }
-
-  return updatedTree;
 }
 
 const useDecisionTree = () => {
@@ -36,13 +34,41 @@ const useDecisionTree = () => {
     console.log(`[decision-tree-maker] addChild to ${parentName}`);
 
     // Find the proper node and add a child with recursive function
-    setTree((prev) => findNodeAndAddNewChild(prev, parentName));
+    setTree((prev) => {
+      const updated = { ...prev };
+      findNodeAndApplyCallbackOnNode(updated, parentName, (node) => {
+        node.children?.push({
+          name: uniqid(),
+          children: [],
+          attributes: { title: 'Child' },
+        });
+      });
+      return updated;
+    });
+  };
+
+  const updateNodeProperties = (parentName?: string, newProperties?: DecisionTreeAttributes) => {
+    if (!parentName || !newProperties) {
+      return;
+    }
+
+    console.log(`[decision-tree-maker] Update node properties of ${parentName}`, newProperties);
+
+    // Find the proper node and add a child with recursive function
+    setTree((prev) => {
+      const updated = { ...prev };
+      findNodeAndApplyCallbackOnNode(updated, parentName, (node) => {
+        node.attributes = { ...node.attributes, ...newProperties };
+      });
+      return updated;
+    });
   };
 
   return {
     zoom,
     tree,
     addChild,
+    updateNodeProperties,
   };
 };
 

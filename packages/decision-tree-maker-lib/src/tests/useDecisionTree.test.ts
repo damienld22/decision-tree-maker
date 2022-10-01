@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import useDecisionTree from '../hooks/useDecisionTree';
 
 describe('[useDecisionTree]', () => {
@@ -70,5 +70,37 @@ describe('[useDecisionTree]', () => {
     const subchild = tree.children?.at(0);
     expect(subchild?.children?.length).toEqual(1);
     expect(subchild?.children?.at(0)?.attributes?.title).toEqual('Child');
+  });
+
+  test('When I update the title of a node, the tree is correctly rendered', () => {
+    const {
+      result: {
+        current: { tree, updateNodeProperties },
+      },
+    } = renderHook(() => useDecisionTree());
+
+    // ACT
+    act(() => updateNodeProperties(tree.name, { title: 'UpdatedTitle' }));
+
+    // ASSERT
+    waitFor(() => expect(tree.attributes?.title).toEqual('UpdatedTitle'));
+  });
+
+  test('When I update the title of a sub node, the tree is correctly rendered', () => {
+    const {
+      result: {
+        current: { tree, updateNodeProperties, addChild },
+      },
+    } = renderHook(() => useDecisionTree());
+
+    // ARRANGE
+    act(() => addChild(tree.name)); // Add a child
+    const subNode = tree.children?.at(0)!;
+
+    // ACT
+    act(() => updateNodeProperties(subNode.name, { title: 'UpdatedTitle' }));
+
+    // ASSERT
+    waitFor(() => expect(subNode.attributes?.title).toEqual('UpdatedTitle'));
   });
 });
