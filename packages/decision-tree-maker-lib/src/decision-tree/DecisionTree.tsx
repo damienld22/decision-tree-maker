@@ -32,7 +32,9 @@ const DecisionTree: FC<DecisionTreeProps> = ({
         zoom={zoom}
         data={tree as any} // eslint-disable-line @typescript-eslint/no-explicit-any
         translate={translate}
-        renderCustomNodeElement={(props) => <TreeNodeElement {...props} onAddNode={addChild} />}
+        renderCustomNodeElement={(props) => (
+          <TreeNodeElement {...(props as any)} onAddNode={addChild} />
+        )}
         nodeSize={{ x: nodeSize, y: nodeSize }}
         orientation='vertical'
         collapsible={false}

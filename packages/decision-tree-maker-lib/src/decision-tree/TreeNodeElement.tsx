@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import styles from './style.module.css';
+import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 
 export interface TreeNodeElementProps {
   onAddNode: (parentName: string) => void;
@@ -13,8 +14,8 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   onNodeClick,
   onAddNode = () => {},
 }) => {
-  const height = 100;
-  const width = 150;
+  const height = 120;
+  const width = 200;
   const x = -(width / 2);
   const y = -(height / 2);
 
@@ -26,7 +27,13 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
       }}
       className={styles.addButton}
     >
-      +
+      <FaPlus />
+    </p>
+  );
+
+  const EditButton = () => (
+    <p className={styles.editButton}>
+      <FaPencilAlt />
     </p>
   );
 
@@ -39,8 +46,13 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
       className={styles.treeNodeElementContainer}
     >
       <div className={styles.treeNodeElementDiv} onClick={onNodeClick}>
+        <div className={styles.topBarNode}>
+          <EditButton />
+        </div>
         <p>{nodeDatum?.attributes?.title}</p>
-        <AddButton />
+        <div className={styles.bottomBarNode}>
+          <AddButton />
+        </div>
       </div>
     </foreignObject>
   );

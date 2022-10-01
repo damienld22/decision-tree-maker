@@ -6,21 +6,27 @@
 }
 
 .treeNodeElementDiv {
-  position: relative;
-  height: 100%;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
+  flex: 1;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  text-align: center;
   cursor: move;
 }
 
-.addButton {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  border: 1px solid black;
-  align-self: flex-end;
+.topBarNode,
+.bottomBarNode {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 20%;
+}
+
+.addButton,
+.editButton {
+  margin-right: 5px;
   cursor: pointer;
 }

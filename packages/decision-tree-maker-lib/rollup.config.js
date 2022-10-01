@@ -31,8 +31,13 @@ export default {
   ],
   onwarn: function (warning, warn) {
     // Ignore d3-transition circular dependency warning
-    if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.importer.includes('/node_modules/d3'))
+    if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.importer.includes('/node_modules/d3')) {
       return;
+    }
+    // Ignore react-icons undefined warning
+    if (warning.code === 'THIS_IS_UNDEFINED' && warning.id.includes('/node_modules/react-icons')) {
+      return;
+    }
     warn(warning);
   },
 };
