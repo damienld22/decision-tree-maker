@@ -2,3 +2,6 @@ examples/
 **/node_modules/
 packages/**/lib/
 rollup.config.js
+packages/**/postcss.config.js
+packages/**/tailwind.config.js
+.yarn/
