@@ -10,4 +10,5 @@ export type DecisionTreeAttributes = Record<
 export interface DecisionTree extends RawNodeDatum {
   attributes?: DecisionTreeAttributes;
   children: DecisionTree[];
+  parentNodeName?: string;
 }

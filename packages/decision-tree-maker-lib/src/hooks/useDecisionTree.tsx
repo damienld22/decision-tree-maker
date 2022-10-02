@@ -12,16 +12,16 @@ function getInitialTree() {
   };
 }
 
-function findNodeAndApplyCallbackOnNode(
+function findNodeAndApplyCallbackOnIt(
   tree: DecisionTree,
-  parentName: string,
+  nodeName: string,
   callback: (node: DecisionTree) => void,
 ) {
-  if (parentName === tree.name) {
+  if (nodeName === tree.name) {
     callback(tree);
   } else {
     tree.children.forEach((subTree) => {
-      findNodeAndApplyCallbackOnNode(subTree, parentName, callback);
+      findNodeAndApplyCallbackOnIt(subTree, nodeName, callback);
     });
   }
 }
@@ -36,9 +36,10 @@ const useDecisionTree = () => {
     // Find the proper node and add a child with recursive function
     setTree((prev) => {
       const updated = { ...prev };
-      findNodeAndApplyCallbackOnNode(updated, parentName, (node) => {
+      findNodeAndApplyCallbackOnIt(updated, parentName, (node) => {
         node.children?.push({
           name: uniqid(),
+          parentNodeName: parentName,
           children: [],
           attributes: { title: 'Child' },
         });
@@ -47,19 +48,38 @@ const useDecisionTree = () => {
     });
   };
 
-  const updateNodeProperties = (parentName?: string, newProperties?: DecisionTreeAttributes) => {
-    if (!parentName || !newProperties) {
+  const updateNodeProperties = (nodeName?: string, newProperties?: DecisionTreeAttributes) => {
+    if (!nodeName || !newProperties) {
       return;
     }
 
-    console.log(`[decision-tree-maker] Update node properties of ${parentName}`, newProperties);
+    console.log(`[decision-tree-maker] Update node properties of ${nodeName}`, newProperties);
 
     // Find the proper node and add a child with recursive function
     setTree((prev) => {
       const updated = { ...prev };
-      findNodeAndApplyCallbackOnNode(updated, parentName, (node) => {
+      findNodeAndApplyCallbackOnIt(updated, nodeName, (node) => {
         node.attributes = { ...node.attributes, ...newProperties };
       });
+      return updated;
+    });
+  };
+
+  const deleteNode = (toDeleteNode: DecisionTree) => {
+    console.log(`[decision-tree-maker] delete current node ${toDeleteNode.name}`);
+
+    // Find the proper node and delete it (and all children)
+    setTree((prev) => {
+      const updated = { ...prev };
+      const callback = (node: DecisionTree) => {
+        node.children = node.children.filter((child) => child.name !== toDeleteNode.name);
+      };
+
+      if (toDeleteNode.parentNodeName) {
+        findNodeAndApplyCallbackOnIt(updated, toDeleteNode.parentNodeName, callback);
+      } else {
+        console.warn(`[decision-tree-maker] delete initial node name is not allowed`);
+      }
       return updated;
     });
   };
@@ -69,6 +89,7 @@ const useDecisionTree = () => {
     tree,
     addChild,
     updateNodeProperties,
+    deleteNode,
   };
 };
 

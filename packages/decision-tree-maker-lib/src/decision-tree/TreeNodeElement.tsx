@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import styles from './style.module.css';
-import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaTrashAlt } from 'react-icons/fa';
 import { DecisionTree } from './types';
 
 export interface TreeNodeElementProps {
   onAddNode: (parentName: string) => void;
-  nodeDatum: RawNodeDatum;
+  onDeleteNode: (node: DecisionTree) => void;
+  nodeDatum: DecisionTree;
   onNodeClick: () => void;
   onOpenEdition: (decisionTree: DecisionTree) => void;
 }
@@ -14,6 +14,7 @@ export interface TreeNodeElementProps {
 const TreeNodeElement: FC<TreeNodeElementProps> = ({
   nodeDatum,
   onNodeClick,
+  onDeleteNode = () => {},
   onAddNode = () => {},
   onOpenEdition,
 }) => {
@@ -46,6 +47,18 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
     </p>
   );
 
+  const DeleteButton = () => (
+    <p
+      className={styles.deleteButton}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        onDeleteNode(nodeDatum as DecisionTree);
+      }}
+    >
+      <FaTrashAlt />
+    </p>
+  );
+
   return (
     <foreignObject
       width={width}
@@ -57,6 +70,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
       <div className={styles.treeNodeElementDiv} onClick={onNodeClick}>
         <div className={styles.topBarNode}>
           <EditButton />
+          {nodeDatum.parentNodeName && <DeleteButton />}
         </div>
         <p>{nodeDatum?.attributes?.title}</p>
         <div className={styles.bottomBarNode}>

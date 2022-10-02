@@ -20,7 +20,7 @@ const DecisionTree: FC<DecisionTreeProps> = ({
 }) => {
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
-  const { tree, zoom, addChild, updateNodeProperties } = useDecisionTree();
+  const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();
   const [toEditNode, setToEditNode] = useState<DecisionTree | null>(null);
   const [selectedNode, setSelectedNode] = useState<RawNodeDatum>();
 
@@ -40,7 +40,12 @@ const DecisionTree: FC<DecisionTreeProps> = ({
         data={tree as any} // eslint-disable-line @typescript-eslint/no-explicit-any
         translate={translate}
         renderCustomNodeElement={(props) => (
-          <TreeNodeElement {...(props as any)} onAddNode={addChild} onOpenEdition={setToEditNode} /> // eslint-disable-line @typescript-eslint/no-explicit-any
+          <TreeNodeElement
+            {...(props as any)} // eslint-disable-line @typescript-eslint/no-explicit-any
+            onAddNode={addChild}
+            onOpenEdition={setToEditNode}
+            onDeleteNode={deleteNode}
+          />
         )}
         nodeSize={{ x: nodeSize, y: nodeSize }}
         orientation='vertical'

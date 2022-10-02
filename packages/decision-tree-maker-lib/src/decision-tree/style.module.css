@@ -26,7 +26,8 @@
 }
 
 .addButton,
-.editButton {
+.editButton,
+.deleteButton {
   margin-right: 5px;
   cursor: pointer;
 }
