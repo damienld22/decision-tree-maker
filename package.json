@@ -11,9 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "format:check": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "preversion": "yarn link && yarn format:check",
-    "prepare": "husky install"
+    "preversion": "yarn lint"
   },
   "keywords": [
     "Decision",

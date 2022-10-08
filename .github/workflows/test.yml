@@ -22,5 +22,5 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - run: yarn
-      - run: yarn lint && yarn format:check
+      - run: yarn lint
       - run: cd ./packages/decision-tree-maker-lib && yarn test

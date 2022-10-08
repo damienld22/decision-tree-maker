@@ -8,9 +8,7 @@ interface EditionModalProps {
 }
 
 const EditionModal: FC<EditionModalProps> = ({ decisionTreeNode, onCancel, onValidate }) => {
-  const [updatedAttributes, setUpdatedAttributes] = useState<DecisionTreeAttributes>(
-    decisionTreeNode.attributes!,
-  );
+  const [updatedAttributes, setUpdatedAttributes] = useState<DecisionTreeAttributes>(decisionTreeNode.attributes!);
 
   return (
     <div className='card border-2 border-black bg-base-100 shadow-xl absolute left-1/2 top-1/2 -translate-x-2/4 -translate-y-2/4 z-50'>
@@ -25,9 +23,7 @@ const EditionModal: FC<EditionModalProps> = ({ decisionTreeNode, onCancel, onVal
             type='text'
             className='input input-bordered w-full max-w-xs'
             value={(updatedAttributes?.title as string) || ''}
-            onChange={(evt) =>
-              setUpdatedAttributes((prev) => ({ ...prev, title: evt.target.value }))
-            }
+            onChange={(evt) => setUpdatedAttributes((prev) => ({ ...prev, title: evt.target.value }))}
           />
         </div>
 

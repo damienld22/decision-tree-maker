@@ -12,11 +12,7 @@ function getInitialTree() {
   };
 }
 
-function findNodeAndApplyCallbackOnIt(
-  tree: DecisionTree,
-  nodeName: string,
-  callback: (node: DecisionTree) => void,
-) {
+function findNodeAndApplyCallbackOnIt(tree: DecisionTree, nodeName: string, callback: (node: DecisionTree) => void) {
   if (nodeName === tree.name) {
     callback(tree);
   } else {

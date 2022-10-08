@@ -13,11 +13,7 @@ export interface DecisionTreeProps {
   onSelectedNodeChanged?: (node?: RawNodeDatum) => void;
 }
 
-const DecisionTree: FC<DecisionTreeProps> = ({
-  width = 500,
-  height = 500,
-  onSelectedNodeChanged = () => {},
-}) => {
+const DecisionTree: FC<DecisionTreeProps> = ({ width = 500, height = 500, onSelectedNodeChanged = () => {} }) => {
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
   const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();

@@ -60,13 +60,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   );
 
   return (
-    <foreignObject
-      width={width}
-      height={height}
-      x={x}
-      y={y}
-      className={styles.treeNodeElementContainer}
-    >
+    <foreignObject width={width} height={height} x={x} y={y} className={styles.treeNodeElementContainer}>
       <div className={styles.treeNodeElementDiv} onClick={onNodeClick}>
         <div className={styles.topBarNode}>
           <EditButton />
