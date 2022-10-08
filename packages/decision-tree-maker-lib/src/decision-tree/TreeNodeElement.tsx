@@ -18,8 +18,8 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   onAddNode = () => {},
   onOpenEdition,
 }) => {
-  const height = 120;
-  const width = 200;
+  const height = nodeDatum.attributes?.description ? 200 : 120;
+  const width = 250;
   const x = -(width / 2);
   const y = -(height / 2);
 
@@ -61,12 +61,13 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
 
   return (
     <foreignObject width={width} height={height} x={x} y={y} className={styles.treeNodeElementContainer}>
-      <div className={styles.treeNodeElementDiv} onClick={onNodeClick}>
+      <div className={`${styles.treeNodeElementDiv} px-3`} onClick={onNodeClick}>
         <div className={styles.topBarNode}>
           <EditButton />
           {nodeDatum.parentNodeName && <DeleteButton />}
         </div>
-        <p>{nodeDatum?.attributes?.title}</p>
+        <p className='font-bold'>{nodeDatum?.attributes?.title}</p>
+        <p className='line-clamp-3 italic text-sm'>{nodeDatum?.attributes?.description}</p>
         <div className={styles.bottomBarNode}>
           <AddButton />
         </div>

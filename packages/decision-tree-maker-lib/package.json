@@ -44,6 +44,7 @@
     "typescript": "^4.8.2"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "os-browserify": "^0.3.0",
     "react-d3-tree": "^3.3.4",
     "react-icons": "^4.4.0",

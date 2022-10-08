@@ -25,6 +25,16 @@ const EditionModal: FC<EditionModalProps> = ({ decisionTreeNode, onCancel, onVal
             value={(updatedAttributes?.title as string) || ''}
             onChange={(evt) => setUpdatedAttributes((prev) => ({ ...prev, title: evt.target.value }))}
           />
+
+          <label className='label'>
+            <span className='label-text'>Description</span>
+          </label>
+          <input
+            type='text'
+            className='input input-bordered w-full max-w-xs'
+            value={(updatedAttributes?.description as string) || ''}
+            onChange={(evt) => setUpdatedAttributes((prev) => ({ ...prev, description: evt.target.value }))}
+          />
         </div>
 
         <div className='flex flex-row justify-evenly'>
