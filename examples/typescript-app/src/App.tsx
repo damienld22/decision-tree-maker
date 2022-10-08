@@ -1,4 +1,4 @@
-import { DecisionTree, RawNodeDatum } from 'decision-tree-maker-lib';
+import { DecisionTreeMaker, RawNodeDatum, DecisionTree } from 'decision-tree-maker-lib';
 import { useState } from 'react';
 
 function App() {
@@ -9,7 +9,11 @@ function App() {
       <div>
         <p>{`Selected node : ${selectedNode?.name || 'None'}`}</p>
       </div>
-      <DecisionTree width={'90vw'} height={'90vh'} onSelectedNodeChanged={setSelectedNode} />
+      <DecisionTreeMaker
+        width={'90vw'}
+          height={'90vh'}
+          onSelectedNodeChanged={setSelectedNode}
+          onChange={(tree: DecisionTree) => console.log('[typescript-app] onChange', tree)} />
     </div>
   );
 }

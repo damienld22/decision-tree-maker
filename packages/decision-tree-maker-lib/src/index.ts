@@ -1,4 +1,5 @@
 import './main.css';
 
-export { default as DecisionTree } from './decision-tree/DecisionTree';
-export * from './decision-tree/DecisionTree'; // Export all named exports like HelloProps
+export { default as DecisionTreeMaker } from './decision-tree/DecisionTreeMaker';
+export * from './decision-tree/DecisionTreeMaker'; // Export all named exports like HelloProps
+export * from './decision-tree/types';

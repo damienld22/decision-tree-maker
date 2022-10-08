@@ -7,13 +7,19 @@ import EditionModal from './EditionModal';
 import TreeNodeElement from './TreeNodeElement';
 import { DecisionTree, DecisionTreeAttributes } from './types';
 
-export interface DecisionTreeProps {
+export interface DecisionTreeMakerProps {
   width?: number | string;
   height?: number | string;
   onSelectedNodeChanged?: (node?: RawNodeDatum) => void;
+  onChange?: (tree: DecisionTree) => void;
 }
 
-const DecisionTree: FC<DecisionTreeProps> = ({ width = 500, height = 500, onSelectedNodeChanged = () => {} }) => {
+const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
+  width = 500,
+  height = 500,
+  onSelectedNodeChanged = () => {},
+  onChange = () => {},
+}) => {
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
   const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();
@@ -28,6 +34,10 @@ const DecisionTree: FC<DecisionTreeProps> = ({ width = 500, height = 500, onSele
     updateNodeProperties(toEditNode?.name, updatedAttributes);
     setToEditNode(null);
   };
+
+  useEffect(() => {
+    onChange(tree);
+  }, [tree]);
 
   return (
     <div style={{ width, height, border: '1px solid' }} ref={containerRef}>
@@ -64,4 +74,4 @@ const DecisionTree: FC<DecisionTreeProps> = ({ width = 500, height = 500, onSele
 };
 
 export { RawNodeDatum };
-export default DecisionTree;
+export default DecisionTreeMaker;
