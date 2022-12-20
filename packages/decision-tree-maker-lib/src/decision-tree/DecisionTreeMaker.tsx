@@ -9,25 +9,21 @@ import { DecisionTree, DecisionTreeAttributes } from './types';
 export interface DecisionTreeMakerProps {
   width?: number | string;
   height?: number | string;
-  onSelectedNodeChanged?: (node?: DecisionTree) => void;
   onChange?: (tree: DecisionTree) => void;
+  selectedNodeStyle?: React.CSSProperties;
 }
 
 const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
   width = 500,
   height = 500,
-  onSelectedNodeChanged = () => {},
   onChange = () => {},
+  selectedNodeStyle,
 }) => {
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
   const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();
   const [toEditNode, setToEditNode] = useState<DecisionTree | null>(null);
   const [selectedNode, setSelectedNode] = useState<DecisionTree>();
-
-  useEffect(() => {
-    onSelectedNodeChanged(selectedNode);
-  }, [selectedNode]);
 
   const onValidateEdition = (updatedAttributes: DecisionTreeAttributes) => {
     updateNodeProperties(toEditNode?.name, updatedAttributes);
@@ -50,6 +46,8 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
             onAddNode={addChild}
             onOpenEdition={setToEditNode}
             onDeleteNode={deleteNode}
+            selectedNodeStyle={selectedNodeStyle}
+            isSelectedNode={props.nodeDatum.name === selectedNode?.name} // eslint-disable-line react/prop-types
           />
         )}
         nodeSize={{ x: nodeSize, y: nodeSize }}

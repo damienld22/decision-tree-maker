@@ -9,7 +9,11 @@ export interface TreeNodeElementProps {
   nodeDatum: DecisionTree;
   onNodeClick: () => void;
   onOpenEdition: (decisionTree: DecisionTree) => void;
+  isSelectedNode: boolean;
+  selectedNodeStyle?: React.CSSProperties;
 }
+
+const defaultSelectedNodeStyle = { border: '2px solid red' };
 
 const TreeNodeElement: FC<TreeNodeElementProps> = ({
   nodeDatum,
@@ -17,6 +21,8 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   onDeleteNode = () => {},
   onAddNode = () => {},
   onOpenEdition,
+  isSelectedNode,
+  selectedNodeStyle,
 }) => {
   const height = 250;
   const width = 250;
@@ -61,7 +67,11 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
 
   return (
     <foreignObject width={width} height={height} x={x} y={y} className={styles.treeNodeElementContainer}>
-      <div className={styles.treeNodeElementDiv} onClick={onNodeClick}>
+      <div
+        className={styles.treeNodeElementDiv}
+        style={isSelectedNode ? selectedNodeStyle || defaultSelectedNodeStyle : {}}
+        onClick={onNodeClick}
+      >
         <div className={styles.topBarNode}>
           <EditButton />
           {nodeDatum.parentNodeName && <DeleteButton />}
