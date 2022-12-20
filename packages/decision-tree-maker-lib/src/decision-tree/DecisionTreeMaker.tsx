@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import Tree from 'react-d3-tree';
-import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import { useCenteredTree } from '../hooks/useCenteredTree';
 import useDecisionTree from '../hooks/useDecisionTree';
 import EditionModal from './EditionModal';
@@ -10,7 +9,7 @@ import { DecisionTree, DecisionTreeAttributes } from './types';
 export interface DecisionTreeMakerProps {
   width?: number | string;
   height?: number | string;
-  onSelectedNodeChanged?: (node?: RawNodeDatum) => void;
+  onSelectedNodeChanged?: (node?: DecisionTree) => void;
   onChange?: (tree: DecisionTree) => void;
 }
 
@@ -24,7 +23,7 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
   const nodeSize = 400;
   const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();
   const [toEditNode, setToEditNode] = useState<DecisionTree | null>(null);
-  const [selectedNode, setSelectedNode] = useState<RawNodeDatum>();
+  const [selectedNode, setSelectedNode] = useState<DecisionTree>();
 
   useEffect(() => {
     onSelectedNodeChanged(selectedNode);
@@ -58,7 +57,7 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
         collapsible={false}
         onNodeClick={({ data }) => {
           console.log('[decision-tree-maker] OnNodeClick', data);
-          setSelectedNode(data);
+          setSelectedNode(data as unknown as DecisionTree);
         }}
       />
 
@@ -73,5 +72,4 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
   );
 };
 
-export { RawNodeDatum };
 export default DecisionTreeMaker;

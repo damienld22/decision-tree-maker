@@ -1,12 +1,16 @@
-import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
-
 export type DecisionTreeAttributes = {
   title: string;
   description?: string;
+  dataPerChildPath: DataChildPath[];
 };
 
-export interface DecisionTree extends RawNodeDatum {
-  attributes?: DecisionTreeAttributes;
+export type DataChildPath = {
+  label: string;
+};
+
+export type DecisionTree = {
+  name: string;
+  attributes: DecisionTreeAttributes;
   children: DecisionTree[];
   parentNodeName?: string;
-}
+};

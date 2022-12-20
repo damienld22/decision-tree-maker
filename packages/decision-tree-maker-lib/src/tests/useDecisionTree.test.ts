@@ -63,9 +63,7 @@ describe('[useDecisionTree]', () => {
     const { result } = renderHook(() => useDecisionTree());
 
     // ACT
-    act(() =>
-      result.current.updateNodeProperties(result.current.tree.name, { title: 'UpdatedTitle' }),
-    );
+    act(() => result.current.updateNodeProperties(result.current.tree.name, { title: 'UpdatedTitle' }));
 
     // ASSERT
     expect(result.current.tree.attributes?.title).toEqual('UpdatedTitle');

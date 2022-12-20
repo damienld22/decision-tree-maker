@@ -8,6 +8,7 @@ function getInitialTree() {
     children: [],
     attributes: {
       title: 'MyDecisionTree',
+      dataPerChildPath: [],
     },
   };
 }
@@ -33,18 +34,25 @@ const useDecisionTree = () => {
     setTree((prev) => {
       const updated = { ...prev };
       findNodeAndApplyCallbackOnIt(updated, parentName, (node) => {
+        // Add dataPerChild for the specific child
+        const numberOfExistingChildren = node.children.length;
+        node.attributes.dataPerChildPath[numberOfExistingChildren] = {
+          label: `Child ${numberOfExistingChildren + 1}`,
+        };
+
+        // Add the new child
         node.children?.push({
           name: uniqid(),
           parentNodeName: parentName,
           children: [],
-          attributes: { title: 'Child' },
+          attributes: { title: 'Child', dataPerChildPath: [] },
         });
       });
       return updated;
     });
   };
 
-  const updateNodeProperties = (nodeName?: string, newProperties?: DecisionTreeAttributes) => {
+  const updateNodeProperties = (nodeName?: string, newProperties?: Partial<DecisionTreeAttributes>) => {
     if (!nodeName || !newProperties) {
       return;
     }
