@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import styles from './style.module.css';
 import { FaPencilAlt, FaPlus, FaTrashAlt } from 'react-icons/fa';
 import { DecisionTree } from './types';
 
@@ -35,7 +34,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
         evt.stopPropagation();
         onAddNode(nodeDatum.name);
       }}
-      className={styles.addButton}
+      className='mr-4 cursor-pointer'
     >
       <FaPlus />
     </p>
@@ -43,7 +42,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
 
   const EditButton = () => (
     <p
-      className={styles.editButton}
+      className='mr-4 cursor-pointer'
       onClick={(evt) => {
         evt.stopPropagation();
         onOpenEdition(nodeDatum as DecisionTree);
@@ -55,7 +54,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
 
   const DeleteButton = () => (
     <p
-      className={styles.deleteButton}
+      className='mr-4 cursor-pointer'
       onClick={(evt) => {
         evt.stopPropagation();
         onDeleteNode(nodeDatum as DecisionTree);
@@ -66,18 +65,24 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   );
 
   return (
-    <foreignObject width={width} height={height} x={x} y={y} className={styles.treeNodeElementContainer}>
+    <foreignObject
+      width={width}
+      height={height}
+      x={x}
+      y={y}
+      className='border-black border-2 rounded-xl shadow bg-white'
+    >
       <div
-        className={styles.treeNodeElementDiv}
+        className='absolute flex flex-col justify-between w-full h-full text-center cursor-move p-4'
         style={isSelectedNode ? selectedNodeStyle || defaultSelectedNodeStyle : {}}
         onClick={onNodeClick}
       >
-        <div className={styles.topBarNode}>
+        <div className='flex justify-end items-center'>
           <EditButton />
           {nodeDatum.parentNodeName && <DeleteButton />}
         </div>
 
-        <div className={styles.treeNodeElementContent}>
+        <div className='overflow-auto'>
           <p className='font-bold'>{nodeDatum?.attributes?.title}</p>
           <p className='line-clamp-3 italic text-sm'>{nodeDatum?.attributes?.description}</p>
 
@@ -95,7 +100,7 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
           )}
         </div>
 
-        <div className={styles.bottomBarNode}>
+        <div className='flex justify-end items-center'>
           <AddButton />
         </div>
       </div>

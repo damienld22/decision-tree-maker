@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import postCSS from 'rollup-plugin-postcss';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
+import bundleSize from 'rollup-plugin-bundle-size';
 import pkg from './package.json';
 
 export default {
@@ -28,6 +29,7 @@ export default {
     postCSS({
       plugins: [require('autoprefixer')],
     }),
+    bundleSize(),
   ],
   onwarn: function (warning, warn) {
     // Ignore d3-transition circular dependency warning
