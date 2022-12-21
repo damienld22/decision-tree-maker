@@ -1,15 +1,16 @@
-import { FC } from 'react';
-import { FaPencilAlt, FaPlus, FaTrashAlt } from 'react-icons/fa';
-import { DecisionTree } from './types';
+import { FC, useState } from 'react';
+import { FaPlus, FaTrashAlt } from 'react-icons/fa';
+import TextInput from './TextInput';
+import { DecisionTree, DecisionTreeAttributes } from './types';
 
 export interface TreeNodeElementProps {
   onAddNode: (parentName: string) => void;
   onDeleteNode: (node: DecisionTree) => void;
   nodeDatum: DecisionTree;
   onNodeClick: () => void;
-  onOpenEdition: (decisionTree: DecisionTree) => void;
   isSelectedNode: boolean;
   selectedNodeStyle?: React.CSSProperties;
+  onEditAttribute: (name: string, attributes: Partial<DecisionTreeAttributes>) => void;
 }
 
 const defaultSelectedNodeStyle = { border: '2px solid red' };
@@ -19,14 +20,15 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
   onNodeClick,
   onDeleteNode = () => {},
   onAddNode = () => {},
-  onOpenEdition,
+  onEditAttribute,
   isSelectedNode,
   selectedNodeStyle,
 }) => {
-  const height = 250;
-  const width = 250;
+  const height = 300;
+  const width = 350;
   const x = -(width / 2);
   const y = -(height / 2);
+  const [currentTab, setCurrentTab] = useState<'properties' | 'children'>('properties');
 
   const AddButton = () => (
     <p
@@ -37,18 +39,6 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
       className='mr-4 cursor-pointer'
     >
       <FaPlus />
-    </p>
-  );
-
-  const EditButton = () => (
-    <p
-      className='mr-4 cursor-pointer'
-      onClick={(evt) => {
-        evt.stopPropagation();
-        onOpenEdition(nodeDatum as DecisionTree);
-      }}
-    >
-      <FaPencilAlt />
     </p>
   );
 
@@ -77,31 +67,67 @@ const TreeNodeElement: FC<TreeNodeElementProps> = ({
         style={isSelectedNode ? selectedNodeStyle || defaultSelectedNodeStyle : {}}
         onClick={onNodeClick}
       >
-        <div className='flex justify-end items-center'>
-          <EditButton />
-          {nodeDatum.parentNodeName && <DeleteButton />}
-        </div>
+        <div className='h-5/6 pb-4'>
+          <div className='tabs'>
+            <a
+              onClick={() => setCurrentTab('properties')}
+              className={`tab tab-bordered ${currentTab === 'properties' && 'tab-active'}`}
+            >
+              Properties
+            </a>
+            {nodeDatum.children.length > 0 && (
+              <a
+                onClick={() => setCurrentTab('children')}
+                className={`tab tab-bordered ${currentTab === 'children' && 'tab-active'}`}
+              >
+                Children
+              </a>
+            )}
+          </div>
 
-        <div className='overflow-auto'>
-          <p className='font-bold'>{nodeDatum?.attributes?.title}</p>
-          <p className='line-clamp-3 italic text-sm'>{nodeDatum?.attributes?.description}</p>
+          {currentTab === 'properties' && (
+            <div className='h-full overflow-auto' onWheelCapture={(e) => e.stopPropagation()}>
+              <TextInput
+                title='Title'
+                value={nodeDatum?.attributes?.title}
+                onChange={(value: string) => onEditAttribute(nodeDatum.name, { title: value })}
+              />
+              <TextInput
+                title='Description'
+                value={nodeDatum?.attributes?.description}
+                onChange={(value: string) => onEditAttribute(nodeDatum.name, { description: value })}
+              />
+            </div>
+          )}
 
-          {nodeDatum.attributes.dataPerChildPath.length > 0 && (
-            <div>
-              <p className='underline'>Data per child : </p>
-
-              {nodeDatum.attributes.dataPerChildPath.map((child, index) => (
-                <div key={index} className='flex flex-col items-start'>
-                  <p className='font-bold'>Child {index + 1}</p>
-                  <p>Label : {child.label}</p>
-                </div>
-              ))}
+          {currentTab === 'children' && (
+            <div className='h-full overflow-auto' onWheelCapture={(e) => e.stopPropagation()}>
+              {nodeDatum.attributes.dataPerChildPath.length > 0 && (
+                <>
+                  {nodeDatum.attributes.dataPerChildPath.map((child, index) => (
+                    <div key={index} className='flex flex-col items-start'>
+                      <p className='font-bold'>Child {index + 1}</p>
+                      <TextInput
+                        title='Label'
+                        value={child.label}
+                        onChange={(value: string) =>
+                          onEditAttribute(nodeDatum.name, {
+                            dataPerChildPath: nodeDatum.attributes.dataPerChildPath.map((elt, i) =>
+                              index === i ? { label: value } : elt,
+                            ),
+                          })
+                        }
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           )}
         </div>
-
         <div className='flex justify-end items-center'>
           <AddButton />
+          <div>{nodeDatum.parentNodeName && <DeleteButton />}</div>
         </div>
       </div>
     </foreignObject>

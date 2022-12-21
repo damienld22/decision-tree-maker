@@ -2,9 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import Tree from 'react-d3-tree';
 import { useCenteredTree } from '../hooks/useCenteredTree';
 import useDecisionTree from '../hooks/useDecisionTree';
-import EditionModal from './EditionModal';
 import TreeNodeElement from './TreeNodeElement';
-import { DecisionTree, DecisionTreeAttributes } from './types';
+import { DecisionTree } from './types';
 
 export interface DecisionTreeMakerProps {
   width?: number | string;
@@ -22,13 +21,7 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
   const { containerRef, translate } = useCenteredTree();
   const nodeSize = 400;
   const { tree, zoom, addChild, updateNodeProperties, deleteNode } = useDecisionTree();
-  const [toEditNode, setToEditNode] = useState<DecisionTree | null>(null);
   const [selectedNode, setSelectedNode] = useState<DecisionTree>();
-
-  const onValidateEdition = (updatedAttributes: DecisionTreeAttributes) => {
-    updateNodeProperties(toEditNode?.name, updatedAttributes);
-    setToEditNode(null);
-  };
 
   useEffect(() => {
     onChange(tree);
@@ -44,10 +37,10 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
           <TreeNodeElement
             {...(props as any)} // eslint-disable-line @typescript-eslint/no-explicit-any
             onAddNode={addChild}
-            onOpenEdition={setToEditNode}
             onDeleteNode={deleteNode}
             selectedNodeStyle={selectedNodeStyle}
             isSelectedNode={props.nodeDatum.name === selectedNode?.name} // eslint-disable-line react/prop-types
+            onEditAttribute={updateNodeProperties}
           />
         )}
         nodeSize={{ x: nodeSize, y: nodeSize }}
@@ -58,14 +51,6 @@ const DecisionTreeMaker: FC<DecisionTreeMakerProps> = ({
           setSelectedNode(data as unknown as DecisionTree);
         }}
       />
-
-      {toEditNode && (
-        <EditionModal
-          decisionTreeNode={toEditNode}
-          onCancel={() => setToEditNode(null)}
-          onValidate={onValidateEdition}
-        />
-      )}
     </div>
   );
 };
