@@ -1,5 +1,5 @@
 {
-  "name": "decision-tree-maker-lib",
+  "name": "decision-tree-maker",
   "version": "0.0.1",
   "description": "Decision tree maker lib",
   "main": "./lib/cjs/index.js",

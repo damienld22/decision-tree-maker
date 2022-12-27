@@ -13,6 +13,8 @@
 
 - [ ] Integrate i18n library to translate some labels
 - [ ] Improve packaging (yarn scripts)
+- [ ] Deploy a first NPM package via CI
+- [ ] Ensure the compatibility of package on previous versions of React
 
 ### Documentation
 
