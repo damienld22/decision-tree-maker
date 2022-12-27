@@ -1,4 +1,4 @@
-name: Test library CI
+name: Test the library (Lint + TU)
 
 on:
   push:
