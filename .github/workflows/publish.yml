@@ -16,11 +16,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Copy README.md to the lib
         run: cp README.md ./packages/decision-tree-maker-lib/README.md
-      - name: Go to library directory
-        run: cd ./packages/decision-tree-maker-lib
       - name: Install dependencies and build 🔧
-        run: yarn && yarn build
+        run: cd ./packages/decision-tree-maker-lib && yarn && yarn build
       - name: Publish package on NPM 📦
-        run: npm publish --access=public
+        run: cd ./packages/decision-tree-maker-lib && npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
