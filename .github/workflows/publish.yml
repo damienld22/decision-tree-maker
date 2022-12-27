@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies and build 🔧
         run: cd ./packages/decision-tree-maker-lib && yarn && yarn build
       - name: Publish package on NPM 📦
-        run: cd ./packages/decision-tree-maker-lib && npm publish --access=public
+        run: cd ./packages/decision-tree-maker-lib && npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
