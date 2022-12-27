@@ -1,4 +1,4 @@
-import { DecisionTreeMaker, DecisionTree } from 'decision-tree-maker-lib';
+import { DecisionTreeMaker, DecisionTree } from 'decision-tree-maker';
 
 function App() {
   return (
