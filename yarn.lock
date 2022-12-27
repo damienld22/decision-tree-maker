@@ -3982,7 +3982,7 @@
 
 "decision-tree-maker@*", "decision-tree-maker@file:/home/damien/workspace/decision-tree-maker/packages/decision-tree-maker-lib":
   "resolved" "file:packages/decision-tree-maker-lib"
-  "version" "0.0.8"
+  "version" "0.0.9"
   dependencies:
     "os-browserify" "^0.3.0"
     "react-d3-tree" "3.4.2"
